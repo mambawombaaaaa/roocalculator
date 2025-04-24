@@ -1,213 +1,186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Triple Green Jackpot Calculator</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            color: #4CAF50;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        label {
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            display: block;
-            color: #4CAF50;
-        }
-
-        input, button {
-            width: 100%;
-            padding: 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            box-sizing: border-box;
-            transition: 0.3s;
-        }
-
-        input:focus, button:focus {
-            border-color: #4CAF50;
-            outline: none;
-        }
-
-        button {
-            background-color: #4CAF50;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button:hover {
-            background-color: #45a049;
-        }
-
-        .result {
-            padding: 20px;
-            background-color: #f0f8f0;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            display: none;
-        }
-
-        .result p {
-            font-size: 16px;
-            margin: 8px 0;
-        }
-
-        .result strong {
-            color: #4CAF50;
-        }
-
-        .info-tooltip {
-            font-size: 14px;
-            color: #4CAF50;
-            cursor: pointer;
-            border-bottom: 1px dashed #4CAF50;
-            margin-left: 5px;
-        }
-
-        .info-tooltip:hover {
-            color: #45a049;
-        }
-
-        .info-popup {
-            background-color: #fff;
-            border: 1px solid #4CAF50;
-            padding: 15px;
-            width: 280px;
-            font-size: 14px;
-            border-radius: 8px;
-            position: absolute;
-            top: 120px;
-            left: 50%;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: none;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-
-        .info-popup h3 {
-            font-size: 18px;
-            margin: 0 0 10px;
-            color: #4CAF50;
-        }
-
-        .info-popup p {
-            margin: 10px 0;
-            color: #555;
-        }
-
-        .info-popup ul {
-            margin: 10px 0;
-            padding-left: 20px;
-            color: #555;
-        }
-
-        .info-popup ul li {
-            list-style-type: disc;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Triple Green Jackpot Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #121212; /* Dark background */
+      color: white;
+      padding: 20px;
+    }
+    .container {
+      background-color: #1f1f1f; /* Darker container */
+      padding: 20px;
+      border-radius: 12px; /* Rounded corners */
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      margin: auto;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    label {
+      font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 5px;
+      font-size: 16px;
+      border: 1px solid #333;
+      border-radius: 8px; /* Rounded corners for inputs */
+      background-color: #2c2c2c; /* Dark background for inputs */
+      color: white;
+    }
+    input:focus, select:focus, button:focus {
+      outline: none;
+      border-color: #4CAF50; /* Green border when focused */
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #333; /* Darker result background */
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    .result p {
+      margin: 10px 0;
+    }
+    .placeholder {
+      color: #888; /* Lighter font for placeholders */
+      font-style: italic;
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-
+  <div class="container">
     <h1>Triple Green Jackpot Calculator</h1>
 
-    <div class="container">
-        <label for="betPerRound">Bet Per Round ($):</label>
-        <input type="number" id="betPerRound" value="1">
-
-        <label for="jackpotTotal">Total Jackpot ($):</label>
-        <input type="number" id="jackpotTotal" value="651661.27">
-
-        <label for="greenBets">Average Green Bets Per Round:</label>
-        <input type="number" id="greenBets" value="130">
-
-        <label for="greenMultiplier">Green Bet Multiplier:</label>
-        <input type="number" id="greenMultiplier" value="14">
-
-        <button onclick="calculatePayout()">Calculate</button>
-
-        <div class="result" id="result">
-            <p><strong>Green Wins:</strong> $<span id="greenWins"></span></p>
-            <p><strong>Jackpot Share:</strong> $<span id="jackpotShare"></span></p>
-            <p><strong>Total Payout:</strong> $<span id="totalPayout"></span></p>
-        </div>
-
-        <!-- Info Tooltip -->
-        <div class="info-tooltip" onclick="togglePopup()">ℹ️ Jackpot Info</div>
-        <div id="popup" class="info-popup">
-            <h3>How It Works:</h3>
-            <p>The jackpot is won when there are 3 greens in a row. All 3 green bets must hit during the rounds to win the jackpot.</p>
-            <p>Here's a breakdown:</p>
-            <ul>
-                <li>Your bet per round is multiplied by 14 when a green wins.</li>
-                <li>The jackpot pool is split evenly across 3 rounds.</li>
-                <li>Your payout depends on how many other players bet on green during those rounds.</li>
-            </ul>
-            <p><strong>Important:</strong> The jackpot only triggers if there are 3 greens in a row!</p>
-        </div>
+    <!-- Bet Round Inputs -->
+    <div class="input-group">
+      <label for="betPerRound1">Bet Round 1 ($):</label>
+      <input type="number" id="betPerRound1" value="1" min="0.01">
+    </div>
+    <div class="input-group" id="betPerRound2Container">
+      <label for="betPerRound2">Bet Round 2 ($):</label>
+      <input type="number" id="betPerRound2" value="1" min="0.01">
+    </div>
+    <div class="input-group" id="betPerRound3Container">
+      <label for="betPerRound3">Bet Round 3 ($):</label>
+      <input type="number" id="betPerRound3" value="1" min="0.01">
     </div>
 
-    <script>
-        function calculatePayout() {
-            const betPerRound = parseFloat(document.getElementById('betPerRound').value);
-            const jackpotTotal = parseFloat(document.getElementById('jackpotTotal').value);
-            const greenBets = parseInt(document.getElementById('greenBets').value);
-            const greenMultiplier = parseFloat(document.getElementById('greenMultiplier').value);
+    <!-- Total Jackpot Input (fully editable) -->
+    <div class="input-group">
+      <label for="jackpotTotal">Total Jackpot ($):</label>
+      <input type="number" id="jackpotTotal" placeholder="Enter the total jackpot">
+    </div>
 
-            const greenWins = betPerRound * greenMultiplier * 3;
-            const jackpotPerRound = jackpotTotal / 3;
-            const userSharePercentage = 1 / greenBets;
-            const userSharePerRound = jackpotPerRound * userSharePercentage;
-            const totalJackpotShare = userSharePerRound * 3;
-            const totalPayout = greenWins + totalJackpotShare;
+    <!-- Green Bets Input (fully editable) -->
+    <div class="input-group">
+      <label for="greenBets">Average Green Bets Per Round:</label>
+      <input type="number" id="greenBets" placeholder="Enter how many bet on green">
+    </div>
 
-            document.getElementById('greenWins').textContent = greenWins.toFixed(2);
-            document.getElementById('jackpotShare').textContent = totalJackpotShare.toFixed(2);
-            document.getElementById('totalPayout').textContent = totalPayout.toFixed(2);
+    <!-- Green Hits Dropdown -->
+    <div class="input-group">
+      <label for="greenHits">Number of Greens You Hit:</label>
+      <select id="greenHits" onchange="updateBetFields()">
+        <option value="1">1 Green</option>
+        <option value="2">2 Greens</option>
+        <option value="3">3 Greens</option>
+      </select>
+    </div>
 
-            // Show the result section
-            document.getElementById('result').style.display = 'block';
-        }
+    <!-- Calculate Button -->
+    <button onclick="calculate()">Calculate</button>
 
-        function togglePopup() {
-            const popup = document.getElementById('popup');
-            popup.style.display = popup.style.display === 'block' ? 'none' : 'block';
-        }
-    </script>
+    <!-- Result Display -->
+    <div id="result" class="result" style="display: none;">
+      <p><strong>Green Wins:</strong> $<span id="greenWins"></span></p>
+      <p><strong>Jackpot Share:</strong> $<span id="jackpotShare"></span></p>
+      <p><strong>Total Bet:</strong> $<span id="totalBet"></span></p>
+      <p><strong>Total Payout:</strong> $<span id="totalPayout"></span></p>
+    </div>
+  </div>
 
+  <script>
+    // Function to update bet fields based on the selected number of greens
+    function updateBetFields() {
+      const greenHits = parseInt(document.getElementById('greenHits').value);
+
+      // Show or hide bet fields based on the number of greens selected
+      const betPerRound2Container = document.getElementById('betPerRound2Container');
+      const betPerRound3Container = document.getElementById('betPerRound3Container');
+      
+      if (greenHits === 1) {
+        betPerRound2Container.style.display = 'none'; // Hide second bet field
+        betPerRound3Container.style.display = 'none'; // Hide third bet field
+      } else if (greenHits === 2) {
+        betPerRound2Container.style.display = 'block'; // Show second bet field
+        betPerRound3Container.style.display = 'none'; // Hide third bet field
+      } else if (greenHits === 3) {
+        betPerRound2Container.style.display = 'block'; // Show second bet field
+        betPerRound3Container.style.display = 'block'; // Show third bet field
+      }
+    }
+
+    function calculate() {
+      // Get values from inputs
+      const betPerRound1 = parseFloat(document.getElementById('betPerRound1').value);
+      const betPerRound2 = parseFloat(document.getElementById('betPerRound2').value);
+      const betPerRound3 = parseFloat(document.getElementById('betPerRound3').value);
+      const jackpotTotal = parseFloat(document.getElementById('jackpotTotal').value);
+      const greenBets = parseInt(document.getElementById('greenBets').value);
+      const greenHits = parseInt(document.getElementById('greenHits').value);
+
+      const greenMultiplier = 14; // 14x multiplier for hitting green
+
+      // Calculate Green Wins (if green is hit)
+      const greenWins = greenHits * greenMultiplier * (betPerRound1 + betPerRound2 + betPerRound3);
+
+      // Calculate the Jackpot Pool (Roo Jackpot contribution)
+      const rooJackpotPool = jackpotTotal * 0.0066666;  // Assuming the jackpot contribution is 0.66666%
+      const jackpotPerRound = rooJackpotPool / 3;
+
+      // Calculate User's Share based on their bet
+      const userSharePercentage = 1 / greenBets;
+      const userSharePerRound = jackpotPerRound * userSharePercentage;
+      const totalJackpotShare = userSharePerRound * greenHits;
+
+      // Total Bet (sum of all rounds)
+      const totalBet = betPerRound1 + betPerRound2 + betPerRound3;
+
+      // Total payout is the sum of green wins + jackpot share
+      const totalPayout = greenWins + totalJackpotShare;
+
+      // Display the results
+      document.getElementById('greenWins').textContent = greenWins.toFixed(2);
+      document.getElementById('jackpotShare').textContent = totalJackpotShare.toFixed(2);
+      document.getElementById('totalBet').textContent = totalBet.toFixed(2);
+      document.getElementById('totalPayout').textContent = totalPayout.toFixed(2);
+
+      // Show the result section
+      document.getElementById('result').style.display = 'block';
+    }
+
+    // Call updateBetFields to set initial visibility
+    updateBetFields();
+  </script>
 </body>
 </html>
