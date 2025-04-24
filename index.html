@@ -3,184 +3,233 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Triple Green Jackpot Calculator</title>
+  <title>Mamba's Roobet Roulette Jackpot & Mines Calculators</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #121212; /* Dark background */
-      color: white;
+      background-color: #0e0e0e;
+      color: #f0f0f0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
+      position: relative;
     }
     .container {
-      background-color: #1f1f1f; /* Darker container */
-      padding: 20px;
-      border-radius: 12px; /* Rounded corners */
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-      max-width: 600px;
+      max-width: 700px;
       margin: auto;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0, 255, 150, 0.2);
     }
-    .input-group {
-      margin-bottom: 15px;
-    }
-    label {
-      font-size: 16px;
-      margin-bottom: 5px;
-      display: block;
+    h1, h2, h4 {
+      text-align: center;
+      color: #0ff59a;
     }
     input, select, button {
       width: 100%;
       padding: 12px;
-      margin-top: 5px;
-      font-size: 16px;
-      border: 1px solid #333;
-      border-radius: 8px; /* Rounded corners for inputs */
-      background-color: #2c2c2c; /* Dark background for inputs */
-      color: white;
-    }
-    input:focus, select:focus, button:focus {
-      outline: none;
-      border-color: #4CAF50; /* Green border when focused */
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
+      margin-top: 10px;
+      margin-bottom: 20px;
       border: none;
-      cursor: pointer;
+      border-radius: 12px;
+      font-size: 1rem;
+      background-color: #2a2a2a;
+      color: #fff;
     }
-    button:hover {
-      background-color: #45a049;
+    input::placeholder {
+      color: #777;
+    }
+    label {
+      font-size: 0.9rem;
+      color: #ccc;
+    }
+    .section {
+      margin-bottom: 20px;
     }
     .result {
-      margin-top: 20px;
-      padding: 15px;
-      background-color: #333; /* Darker result background */
-      border-radius: 8px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+      background-color: #202020;
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #0ff59a;
     }
     .result p {
-      margin: 10px 0;
+      margin: 0.5em 0;
+      font-size: 1.05rem;
     }
-    .placeholder {
-      color: #888; /* Lighter font for placeholders */
-      font-style: italic;
-      font-size: 14px;
+    .credit {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #0ff59a;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    .online-users {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      color: #aaa;
+      animation: rainbow 5s linear infinite;
+    }
+    @keyframes rainbow {
+      0% { color: red; }
+      14% { color: orange; }
+      28% { color: yellow; }
+      42% { color: green; }
+      57% { color: blue; }
+      71% { color: indigo; }
+      85% { color: violet; }
+      100% { color: red; }
+    }
+    .nav {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      z-index: 999;
+    }
+    .nav button {
+      background-color: #0ff59a;
+      color: #1a1a1a;
+      border-radius: 12px;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      margin: 0 5px;
+      cursor: pointer;
+      border: none;
+    }
+    .nav button:hover {
+      background-color: #2a2a2a;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 5px;
+      margin-top: 20px;
+    }
+    .cell {
+      width: 40px;
+      height: 40px;
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .cell:hover {
+      background-color: #444;
+    }
+    .mine {
+      background-color: red;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Triple Green Jackpot Calculator</h1>
+    <div class="credit">Mamba's Roobet Roulette Jackpot & Mines Calculators</div>
+    <div class="online-users" id="userCount"></div>
 
-    <!-- Bet Round Inputs -->
-    <div class="input-group">
-      <label for="betPerRound1">Bet Round 1 ($):</label>
-      <input type="number" id="betPerRound1" value="1" min="0.01">
-    </div>
-    <div class="input-group" id="betPerRound2Container">
-      <label for="betPerRound2">Bet Round 2 ($):</label>
-      <input type="number" id="betPerRound2" value="1" min="0.01">
-    </div>
-    <div class="input-group" id="betPerRound3Container">
-      <label for="betPerRound3">Bet Round 3 ($):</label>
-      <input type="number" id="betPerRound3" value="1" min="0.01">
+    <!-- Navigation Buttons -->
+    <div class="nav">
+      <button onclick="showPage('jackpot')">Triple Green Jackpot</button>
+      <button onclick="showPage('mines')">Mines Calculator</button>
     </div>
 
-    <!-- Total Jackpot Input (fully editable) -->
-    <div class="input-group">
-      <label for="jackpotTotal">Total Jackpot ($):</label>
-      <input type="number" id="jackpotTotal" placeholder="Enter the total jackpot">
-    </div>
+    <!-- Jackpot Page -->
+    <div id="jackpotPage">
+      <h2>Triple Green Jackpot Calculator</h2>
 
-    <!-- Green Bets Input (fully editable) -->
-    <div class="input-group">
-      <label for="greenBets">Average Green Bets Per Round:</label>
-      <input type="number" id="greenBets" placeholder="Enter how many bet on green">
-    </div>
-
-    <!-- Green Hits Dropdown -->
-    <div class="input-group">
-      <label for="greenHits">Number of Greens You Hit:</label>
-      <select id="greenHits" onchange="updateBetFields()">
-        <option value="1">1 Green</option>
-        <option value="2">2 Greens</option>
-        <option value="3">3 Greens</option>
+      <label for="greenHits">How many times did you hit green?</label>
+      <select id="greenHits" onchange="updateRounds()">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
       </select>
+
+      <div id="roundsContainer"></div>
+
+      <label for="jackpot">Total Jackpot ($)</label>
+      <input id="jackpot" type="number" placeholder="what the total jackpot is">
+
+      <button onclick="calculateJackpot()">Calculate</button>
+
+      <div class="result" id="output"></div>
     </div>
 
-    <!-- Calculate Button -->
-    <button onclick="calculate()">Calculate</button>
+    <!-- Mines Page -->
+    <div id="minesPage" style="display: none;">
+      <h2>Mines Calculator</h2>
 
-    <!-- Result Display -->
-    <div id="result" class="result" style="display: none;">
-      <p><strong>Green Wins:</strong> $<span id="greenWins"></span></p>
-      <p><strong>Jackpot Share:</strong> $<span id="jackpotShare"></span></p>
-      <p><strong>Total Bet:</strong> $<span id="totalBet"></span></p>
-      <p><strong>Total Payout:</strong> $<span id="totalPayout"></span></p>
+      <label for="mineCount">Number of Mines</label>
+      <input id="mineCount" type="number" min="1" max="24" value="5" placeholder="Enter number of mines">
+
+      <button onclick="generateMines()">Generate Grid</button>
+
+      <div class="grid" id="grid"></div>
+
+      <div class="result" id="minesOutput"></div>
     </div>
   </div>
 
   <script>
-    // Function to update bet fields based on the selected number of greens
-    function updateBetFields() {
-      const greenHits = parseInt(document.getElementById('greenHits').value);
+    let currentUserCount = 0;
 
-      // Show or hide bet fields based on the number of greens selected
-      const betPerRound2Container = document.getElementById('betPerRound2Container');
-      const betPerRound3Container = document.getElementById('betPerRound3Container');
-      
-      if (greenHits === 1) {
-        betPerRound2Container.style.display = 'none'; // Hide second bet field
-        betPerRound3Container.style.display = 'none'; // Hide third bet field
-      } else if (greenHits === 2) {
-        betPerRound2Container.style.display = 'block'; // Show second bet field
-        betPerRound3Container.style.display = 'none'; // Hide third bet field
-      } else if (greenHits === 3) {
-        betPerRound2Container.style.display = 'block'; // Show second bet field
-        betPerRound3Container.style.display = 'block'; // Show third bet field
+    function generateMines() {
+      const mineCount = parseInt(document.getElementById('mineCount').value);
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+
+      // Create 5x5 grid with cells
+      const cells = [];
+      for (let i = 0; i < 25; i++) {
+        cells.push(i);
+      }
+
+      // Randomly choose mines
+      const mines = [];
+      while (mines.length < mineCount) {
+        const randIndex = Math.floor(Math.random() * cells.length);
+        const minePosition = cells.splice(randIndex, 1)[0];  // Remove and store mine position
+        mines.push(minePosition);
+      }
+
+      // Render grid
+      cells.forEach((cell, index) => {
+        const cellElement = document.createElement('div');
+        cellElement.classList.add('cell');
+        cellElement.dataset.index = index;
+        if (mines.includes(index)) {
+          cellElement.classList.add('mine');
+        }
+        grid.appendChild(cellElement);
+      });
+
+      document.getElementById('minesOutput').innerText = `Grid generated with ${mineCount} mines! Click a cell to reveal.`;
+    }
+
+    function showPage(page) {
+      if (page === 'jackpot') {
+        document.getElementById('jackpotPage').style.display = 'block';
+        document.getElementById('minesPage').style.display = 'none';
+      } else if (page === 'mines') {
+        document.getElementById('minesPage').style.display = 'block';
+        document.getElementById('jackpotPage').style.display = 'none';
       }
     }
 
-    function calculate() {
-      // Get values from inputs
-      const betPerRound1 = parseFloat(document.getElementById('betPerRound1').value);
-      const betPerRound2 = parseFloat(document.getElementById('betPerRound2').value);
-      const betPerRound3 = parseFloat(document.getElementById('betPerRound3').value);
-      const jackpotTotal = parseFloat(document.getElementById('jackpotTotal').value);
-      const greenBets = parseInt(document.getElementById('greenBets').value);
-      const greenHits = parseInt(document.getElementById('greenHits').value);
+    function simulateOnlineUsers() {
+      const randomChange = Math.floor(Math.random() * 5) + 1;
+      const minUsers = Math.max(3, currentUserCount - randomChange);
+      const maxUsers = Math.min(30, currentUserCount + randomChange);
+      currentUserCount = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
 
-      const greenMultiplier = 14; // 14x multiplier for hitting green
-
-      // Calculate Green Wins (if green is hit)
-      const greenWins = greenHits * greenMultiplier * (betPerRound1 + betPerRound2 + betPerRound3);
-
-      // Calculate the Jackpot Pool (Roo Jackpot contribution)
-      const rooJackpotPool = jackpotTotal * 0.0066666;  // Assuming the jackpot contribution is 0.66666%
-      const jackpotPerRound = rooJackpotPool / 3;
-
-      // Calculate User's Share based on their bet
-      const userSharePercentage = 1 / greenBets;
-      const userSharePerRound = jackpotPerRound * userSharePercentage;
-      const totalJackpotShare = userSharePerRound * greenHits;
-
-      // Total Bet (sum of all rounds)
-      const totalBet = betPerRound1 + betPerRound2 + betPerRound3;
-
-      // Total payout is the sum of green wins + jackpot share
-      const totalPayout = greenWins + totalJackpotShare;
-
-      // Display the results
-      document.getElementById('greenWins').textContent = greenWins.toFixed(2);
-      document.getElementById('jackpotShare').textContent = totalJackpotShare.toFixed(2);
-      document.getElementById('totalBet').textContent = totalBet.toFixed(2);
-      document.getElementById('totalPayout').textContent = totalPayout.toFixed(2);
-
-      // Show the result section
-      document.getElementById('result').style.display = 'block';
+      document.getElementById('userCount').innerText = `Currently ${currentUserCount} users online`;
     }
 
-    // Call updateBetFields to set initial visibility
-    updateBetFields();
+    window.onload = function () {
+      simulateOnlineUsers();
+    }
   </script>
 </body>
 </html>
