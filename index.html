@@ -3,14 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mamba's Roobet Roulette Jackpot & Mines Calculators</title>
+  <title>Mamba's Roobet Roulette Jackpot Calculator</title>
   <style>
     body {
       background-color: #0e0e0e;
       color: #f0f0f0;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
-      position: relative;
     }
     .container {
       max-width: 700px;
@@ -79,147 +78,88 @@
       85% { color: violet; }
       100% { color: red; }
     }
-    .nav {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      z-index: 999;
-    }
-    .nav button {
-      background-color: #0ff59a;
-      color: #1a1a1a;
-      border-radius: 12px;
-      font-size: 0.8rem;
-      padding: 8px 12px;
-      margin: 0 5px;
-      cursor: pointer;
-      border: none;
-    }
-    .nav button:hover {
-      background-color: #2a2a2a;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 5px;
-      margin-top: 20px;
-    }
-    .cell {
-      width: 40px;
-      height: 40px;
-      background-color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-radius: 5px;
-      color: white;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .cell:hover {
-      background-color: #444;
-    }
-    .mine {
-      background-color: red;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="credit">Mamba's Roobet Roulette Jackpot & Mines Calculators</div>
+    <div class="credit">Mamba's Roobet Roulette Jackpot Calculator</div>
     <div class="online-users" id="userCount"></div>
 
-    <!-- Navigation Buttons -->
-    <div class="nav">
-      <button onclick="showPage('jackpot')">Triple Green Jackpot</button>
-      <button onclick="showPage('mines')">Mines Calculator</button>
-    </div>
+    <h2>Triple Green Jackpot Calculator</h2>
 
-    <!-- Jackpot Page -->
-    <div id="jackpotPage">
-      <h2>Triple Green Jackpot Calculator</h2>
+    <label for="greenHits">How many times did you hit green?</label>
+    <select id="greenHits" onchange="updateRounds()">
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
 
-      <label for="greenHits">How many times did you hit green?</label>
-      <select id="greenHits" onchange="updateRounds()">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-      </select>
+    <div id="roundsContainer"></div>
 
-      <div id="roundsContainer"></div>
+    <label for="jackpot">Total Jackpot ($)</label>
+    <input id="jackpot" type="number" placeholder="what the total jackpot is">
 
-      <label for="jackpot">Total Jackpot ($)</label>
-      <input id="jackpot" type="number" placeholder="what the total jackpot is">
+    <button onclick="calculateJackpot()">Calculate</button>
 
-      <button onclick="calculateJackpot()">Calculate</button>
-
-      <div class="result" id="output"></div>
-    </div>
-
-    <!-- Mines Page -->
-    <div id="minesPage" style="display: none;">
-      <h2>Mines Calculator</h2>
-
-      <label for="mineCount">Number of Mines</label>
-      <input id="mineCount" type="number" min="1" max="24" value="5" placeholder="Enter number of mines">
-
-      <button onclick="generateMines()">Generate Grid</button>
-
-      <div class="grid" id="grid"></div>
-
-      <div class="result" id="minesOutput"></div>
-    </div>
+    <div class="result" id="output"></div>
   </div>
 
   <script>
     let currentUserCount = 0;
 
-    function generateMines() {
-      const mineCount = parseInt(document.getElementById('mineCount').value);
-      const grid = document.getElementById('grid');
-      grid.innerHTML = '';
+    function updateRounds() {
+      const num = parseInt(document.getElementById('greenHits').value);
+      const container = document.getElementById('roundsContainer');
+      container.innerHTML = '';
 
-      // Create 5x5 grid with cells
-      const cells = [];
-      for (let i = 0; i < 25; i++) {
-        cells.push(i);
+      for (let i = 1; i <= num; i++) {
+        container.innerHTML += `
+          <div class="section">
+            <h4>Round ${i}</h4>
+            <label>Your Bet ($)</label>
+            <input type="number" id="yourBet${i}" placeholder="e.g. 100">
+            <label>Total Green Bets ($)</label>
+            <input type="number" id="totalBets${i}" placeholder="how many degens bet on green">
+          </div>
+        `;
       }
-
-      // Randomly choose mines
-      const mines = [];
-      while (mines.length < mineCount) {
-        const randIndex = Math.floor(Math.random() * cells.length);
-        const minePosition = cells.splice(randIndex, 1)[0];  // Remove and store mine position
-        mines.push(minePosition);
-      }
-
-      // Render grid
-      cells.forEach((cell, index) => {
-        const cellElement = document.createElement('div');
-        cellElement.classList.add('cell');
-        cellElement.dataset.index = index;
-        if (mines.includes(index)) {
-          cellElement.classList.add('mine');
-        }
-        grid.appendChild(cellElement);
-      });
-
-      document.getElementById('minesOutput').innerText = `Grid generated with ${mineCount} mines! Click a cell to reveal.`;
     }
 
-    function showPage(page) {
-      if (page === 'jackpot') {
-        document.getElementById('jackpotPage').style.display = 'block';
-        document.getElementById('minesPage').style.display = 'none';
-      } else if (page === 'mines') {
-        document.getElementById('minesPage').style.display = 'block';
-        document.getElementById('jackpotPage').style.display = 'none';
+    function calculateJackpot() {
+      const num = parseInt(document.getElementById('greenHits').value);
+      const jackpot = parseFloat(document.getElementById('jackpot').value);
+
+      if (isNaN(jackpot)) {
+        document.getElementById('output').innerText = 'Please enter the total jackpot amount.';
+        return;
       }
+
+      let totalShare = 0;
+      let totalGreenMultiplier = 0;
+
+      for (let i = 1; i <= num; i++) {
+        const yourBet = parseFloat(document.getElementById(`yourBet${i}`).value);
+        const totalBets = parseFloat(document.getElementById(`totalBets${i}`).value);
+
+        if (isNaN(yourBet) || isNaN(totalBets)) {
+          document.getElementById('output').innerText = 'Please enter valid bets for all rounds.';
+          return;
+        }
+
+        const roundShare = (yourBet / totalBets) * (jackpot / 3);
+        totalShare += roundShare;
+        totalGreenMultiplier += yourBet * 14;
+      }
+
+      document.getElementById('output').innerHTML = `
+        <p><strong>Jackpot Share:</strong> $${totalShare.toFixed(2)}</p>
+        <p><strong>14x Bet Winnings:</strong> $${totalGreenMultiplier.toFixed(2)}</p>
+        <p><strong>Total Payout:</strong> $${(totalShare + totalGreenMultiplier).toFixed(2)}</p>
+      `;
     }
 
     function simulateOnlineUsers() {
-      const randomChange = Math.floor(Math.random() * 5) + 1;
+      const randomChange = Math.floor(Math.random() * 5) + 1; // Random change between 1 and 5
       const minUsers = Math.max(3, currentUserCount - randomChange);
       const maxUsers = Math.min(30, currentUserCount + randomChange);
       currentUserCount = Math.floor(Math.random() * (maxUsers - minUsers + 1)) + minUsers;
@@ -228,7 +168,9 @@
     }
 
     window.onload = function () {
-      simulateOnlineUsers();
+      updateRounds();
+      simulateOnlineUsers(); // Initial users count
+      setInterval(simulateOnlineUsers, 30000); // Update every 30 seconds
     }
   </script>
 </body>
